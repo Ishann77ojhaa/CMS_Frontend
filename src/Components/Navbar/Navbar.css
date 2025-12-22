@@ -1,0 +1,132 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-color: #1a1a1d;
+    --nav-bg: #2b2b2e;
+    --text-color: #ffffff;
+    --accent-color: #00d2ff; /* Cyan Blue */
+    --hover-bg: rgba(0, 210, 255, 0.1);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--nav-bg);
+    padding: 20px 50px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--accent-color);
+}
+
+/* --- Navigation Links (UL) --- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* Space between links */
+}
+
+/* --- Individual Link Styling --- */
+.nav-links li a {
+    text-decoration: none;
+    color: #b0b0b0; /* Slightly dimmed white */
+    font-size: 1.1rem;
+    font-weight: 500;
+    position: relative; /* Needed for the ::after effect */
+    transition: color 0.3s ease-in-out;
+    padding: 5px 0;
+}
+
+/* --- THE COOL HOVER EFFECT (Sliding Underline) --- */
+/* 1. Create the line but hide it first */
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0%; /* Start with 0 width */
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-in-out; /* Smooth slide */
+}
+
+/* 2. On Hover: Expand width to 100% and change text color */
+.nav-links li a:hover {
+    color: var(--text-color);
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* --- CTA Button Styling --- */
+.cta-button {
+    text-decoration: none;
+    padding: 10px 25px;
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+/* CTA Button Hover Effect */
+.cta-button:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--accent-color); /* Glow effect */
+    transform: translateY(-2px); /* Slight lift */
+}
+
+/* --- Placeholder Content Styling --- */
+.content {
+    text-align: center;
+    margin-top: 100px;
+}
+.content h1 {
+    font-size: 3rem;
+}
+
+/* --- Simple Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    .nav-links {
+        margin-top: 20px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .cta-button {
+        margin-top: 20px;
+    }
+}
