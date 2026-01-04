@@ -6,19 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 const CreateBlog = () => {
   const navigate = useNavigate()
-  const [Title,setTitle] = useState("")
-  const [SubTitle,setSubTitle] = useState ("")
-  const [Description,setDescription] =useState ("")
-
-
-const createblog = async (e)=>{
+ const createblog = async (e)=>{
   e.preventDefault()
-  const data = {
-    Title : Title,         //backend_le_liyeko = State_Name
-    SubTitle : SubTitle,
-    Description : Description
-  }
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData)
     const response =  await axios.post("http://localhost:3000/createblogs",data)
+
   if(response.status == 200){
     alert(response.data.message)
     navigate("/")
@@ -42,17 +35,17 @@ const createblog = async (e)=>{
         <form onSubmit={createblog} >
             <div className="form-group">
                 <label htmlFor="Title">Title</label>
-                <input type="text" id="Title" placeholder="Enter Blog title" required onChange={(e)=>setTitle(e.target.value)}/>
+                <input type="text" name="Title" placeholder="Enter Blog title" />
             </div>
 
             <div className="form-group">
                 <label htmlFor="SubTitle">SubTitle</label>
-                <input type="text" id="SubTitle" placeholder="Enter Blog Subtitle (optional)" onChange={(e)=>setSubTitle(e.target.value)}/>
+                <input type="text" name="SubTitle" placeholder="Enter Blog Subtitle (optional)"/>
             </div>
 
             <div className="form-group">
                 <label htmlFor="Description"> Enter Your Blog in Detail </label>
-                <textarea id="Description" placeholder="Tell us about your Blog..." onChange={(e)=>setDescription(e.target.value)}></textarea>
+                <textarea name="Description" placeholder="Tell us about your Blog..."></textarea>
             </div>
 
             <button type="submit" className="submit-btn"> Submit </button>
