@@ -32,7 +32,7 @@ const fetchBlogs = async() =>{
     <>
     <NavBar/>
     <br/>
-    <div className="card" style={{width: "18rem", margin: "20px", display: "flex"}}>
+    <div className="card" style={{width: "20rem", margin: "20px", display: "flex"}}>
 
 {blogs.map((blog)=>{
   return (

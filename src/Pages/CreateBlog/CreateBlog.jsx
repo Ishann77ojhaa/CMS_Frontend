@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom'
 
 const CreateBlog = () => {
   const navigate = useNavigate()
+  const [data,SetData] = useState({
+    Title : "",
+    SubTitle : "",
+    Description : ""
+  })
  const createblog = async (e)=>{
   e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData)
     const response =  await axios.post("http://localhost:3000/createblogs",data)
-
   if(response.status == 200){
     alert(response.data.message)
     navigate("/")
@@ -19,8 +21,15 @@ const CreateBlog = () => {
   else{
     alert("Something Went Wrong")
   }
-
 }
+ const handlechange =(e)=>{
+    const {name, value} = e.target
+    SetData({
+      ...data,
+      [name] : value
+    })
+ }
+
   return (
     <>
     <NavBar/>
@@ -35,17 +44,17 @@ const CreateBlog = () => {
         <form onSubmit={createblog} >
             <div className="form-group">
                 <label htmlFor="Title">Title</label>
-                <input type="text" name="Title" placeholder="Enter Blog title" />
+                <input type="text" id="Title" name="Title" placeholder="Enter Blog title" onChange = {handlechange}/>
             </div>
 
             <div className="form-group">
                 <label htmlFor="SubTitle">SubTitle</label>
-                <input type="text" name="SubTitle" placeholder="Enter Blog Subtitle (optional)"/>
+                <input type="text" id="SubTitle" name="SubTitle" placeholder="Enter Blog Subtitle (optional)" onChange = {handlechange} />
             </div>
 
             <div className="form-group">
                 <label htmlFor="Description"> Enter Your Blog in Detail </label>
-                <textarea name="Description" placeholder="Tell us about your Blog..."></textarea>
+                <textarea  id="Description" name="Description" placeholder="Tell us about your Blog..." onChange = {handlechange} ></textarea>
             </div>
 
             <button type="submit" className="submit-btn"> Submit </button>
