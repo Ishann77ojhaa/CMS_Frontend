@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavBar from '../../Components/Navbar/Navbar'
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Link } from 'react-router-dom'
 
 const Home = () => {        
  const[blogs, setBlogs] = useState([])   
@@ -40,7 +41,7 @@ const fetchBlogs = async() =>{
     <h2 className="card-title">{blog.Title}</h2>
     <h4 className="card-subtitle">{blog.SubTitle}</h4>
     <p className="card-description">{blog.Description}</p>
-    <a href="#" className="btn btn-primary">Go somewhere</a>
+    <Link to = {`/singleblog/${blog._id}`}>See more</Link>
 </div>
 )
 })}
