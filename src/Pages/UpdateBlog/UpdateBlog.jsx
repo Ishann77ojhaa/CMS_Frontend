@@ -62,17 +62,17 @@ const UpdateBlog = () => {
         <form onSubmit={updateBlog}>
             <div className="form-group">
                 <label htmlFor="Title">Title</label>
-                <input type="text" value = {blog.Title} name="Title" placeholder="Enter Blog title"/>
+                <input type="text" value = {blog.Title} onChange={handleChange} name="Title" placeholder="Enter Blog title"/>
             </div>
 
             <div className="form-group">
                 <label htmlFor="SubTitle">SubTitle</label>
-                <input type="text" value = {blog.SubTitle} id="SubTitle"  name="SubTitle" placeholder="Enter Blog Subtitle (optional)" />
+                <input type="text" value = {blog.SubTitle} onChange={handleChange} id="SubTitle"  name="SubTitle" placeholder="Enter Blog Subtitle (optional)" />
             </div>
 
             <div className="form-group">
                 <label htmlFor="Description"> Enter Your Blog in Detail </label>
-                <textarea  id="Description" value = {blog.Description}  name="Description" placeholder="Tell us about your Blog..." ></textarea>
+                <textarea  id="Description" value = {blog.Description} onChange={handleChange} name="Description" placeholder="Tell us about your Blog..." ></textarea>
             </div>
 
             <button type="submit" className="submit-btn"> Submit </button>
