@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import './SingleBlog.css'
 
@@ -25,6 +25,9 @@ const fetchsingleblog = async()=>{
   useEffect(()=>{
           fetchsingleblog()
   },[])
+
+  
+
  return (
   <div className="single-blog-page">
     <div className="single-blog-card">
@@ -39,6 +42,7 @@ const fetchsingleblog = async()=>{
       <button className="delete-btn" onClick={deleteBlog}>
         Delete This Blog
       </button>
+      <Link to={`/update/${blog._id}`} > Update Blog</Link> 
     </div>
   </div>
 )
