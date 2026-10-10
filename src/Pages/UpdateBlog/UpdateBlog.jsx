@@ -1,87 +1,12 @@
-import { useNavigate, useParams } from 'react-router-dom'
-import './UpdateBlog.css'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 import NavBar from '../../Components/Navbar/Navbar'
 
-
-const UpdateBlog = () => {
-    const navigate = useNavigate()
-    const {id} = useParams()
-    const [blog,setBlog] = useState({})
-
-    // handle change of the input 
-    const handleChange = (e)=>{
-        // console.log(e.target.value,e.target.name)
-        const {name,value} = e.target
-        setBlog({
-            ...blog,
-            [name] : value
-        })
-
-    }
-   
-    // delete key of the object 
-    const keyToExclude = ['createdAt','updatedAt']
-    keyToExclude.forEach((key)=>{
-        delete blog[key]
-    })
-
-    const updateBlog = async (e)=>{
-        e.preventDefault()
-        const response = await axios.patch("http://localhost:3000/blogs/" + id,blog)
-        if(response.status == 200){
-            navigate("/singleBlog/" + id)
-        }
-    }
-
-
-    const fetchSingleBlog = async()=>{
-        const response = await axios.get("http://localhost:3000/blogs/" + id)
-     
-        if(response.status ==200){
-            setBlog(response.data.data)
-        }
-    }
-
-    useEffect(()=>{
-        fetchSingleBlog()
-
-    },[])
-
-  return (
-    <>
-    <NavBar/>
- <div className="create-blog-container">
-      <div className="form-card">
-        <header className="form-header">
-            <h1>Edit Your Content </h1>
-            <p>Just Update Your existing Data's with what you wanna change.</p>
-        </header>
-
-        <form onSubmit={updateBlog}>
-            <div className="form-group">
-                <label htmlFor="Title">Title</label>
-                <input type="text" value = {blog.Title} onChange={handleChange} name="Title" placeholder="Enter Blog title"/>
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="SubTitle">SubTitle</label>
-                <input type="text" value = {blog.SubTitle} onChange={handleChange} id="SubTitle"  name="SubTitle" placeholder="Enter Blog Subtitle (optional)" />
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="Description"> Enter Your Blog in Detail </label>
-                <textarea  id="Description" value = {blog.Description} onChange={handleChange} name="Description" placeholder="Tell us about your Blog..." ></textarea>
-            </div>
-
-            <button type="submit" className="submit-btn"> Submit </button>
-        </form>
-    </div>
-         </div>
-         </>
-
-  )
+export default function UpdateBlog() {
+  const navigate = useNavigate(); const { id } = useParams(); const [blog,setBlog] = useState({Title:'',SubTitle:'',Description:''}); const [loading,setLoading] = useState(true); const [saving,setSaving] = useState(false); const [error,setError] = useState('')
+  useEffect(() => { axios.get(`http://localhost:3000/blogs/${id}`).then(r => { const {Title='',SubTitle='',Description=''} = r.data.data || {}; setBlog({Title,SubTitle,Description}) }).catch(() => setError('Could not load this article. Please check your backend connection.')).finally(() => setLoading(false)) }, [id])
+  const handleChange = e => setBlog(prev => ({...prev,[e.target.name]:e.target.value}))
+  const updateBlog = async e => { e.preventDefault(); setSaving(true); setError(''); try { await axios.patch(`http://localhost:3000/blogs/${id}`,blog); navigate(`/singleblog/${id}`) } catch { setError('Your changes could not be saved. Please try again.') } finally { setSaving(false) } }
+  return <div className="app-shell"><NavBar/><main className="page-wrap form-layout"><Link to={`/singleblog/${id}`} className="back-link">← &nbsp; Back to article</Link><section className="page-heading"><div><div className="eyebrow">THE WRITING DESK / 03</div><h1>Every word can get better<span style={{color:'#a1bd4c'}}>.</span></h1><p>Revisit your idea, make a few changes, and save when it feels right.</p></div></section><form className="form-panel" onSubmit={updateBlog}><h2>Edit article</h2><p className="form-intro">Your existing words are right where you left them.</p>{error && <div className="toast-error">{error}</div>}{loading ? <p className="form-intro">Loading your article…</p> : <><div className="form-grid"><div className="field full"><label htmlFor="Title">Article title *</label><input required id="Title" name="Title" maxLength={160} value={blog.Title} onChange={handleChange} placeholder="Give your idea a name…"/></div><div className="field full"><label htmlFor="SubTitle">Subtitle <span style={{fontWeight:400,color:'#9da095'}}>(optional)</span></label><input id="SubTitle" name="SubTitle" value={blog.SubTitle} onChange={handleChange} placeholder="A little more context…"/></div><div className="field full"><label htmlFor="Description">Your story *</label><textarea required id="Description" name="Description" value={blog.Description} onChange={handleChange} placeholder="Your words go here…"/><span className="field-hint">{blog.Description.trim() ? blog.Description.trim().split(/\s+/).length : 0} words</span></div></div><div className="form-actions"><Link to={`/singleblog/${id}`} className="secondary-btn">Cancel</Link><button type="submit" className="primary-btn" disabled={saving}>{saving ? 'Saving…' : 'Save changes'} &nbsp; ↗</button></div></>}</form></main></div>
 }
-
-export default UpdateBlog

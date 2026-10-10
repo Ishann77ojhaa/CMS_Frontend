@@ -1,17 +1,28 @@
-# React + Vite
+# Paperplane CMS — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A refreshed, responsive React + Vite frontend for your existing blog CMS API.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Install Node.js (18+ recommended).
+2. In this folder, run `npm install`.
+3. Start the frontend with `npm run dev`.
+4. Ensure your existing backend is running at `http://localhost:3000`.
 
-## React Compiler
+## Existing API routes used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `GET /blogs` — list articles
+- `GET /blogs/:id` — view one article
+- `POST /createblogs` — create an article
+- `PATCH /blogs/:id` — update an article
+- `DELETE /blogs/:id` — delete an article
 
-## Expanding the ESLint configuration
+The backend URL is currently configured in the page components as `http://localhost:3000`. If your API runs elsewhere, update those URLs.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# CMS_Frontend" 
+## UI improvements
+
+- Responsive layout for desktop, tablet, and mobile
+- Content dashboard with article counts and search
+- Redesigned article cards, detail view, and create/edit forms
+- Loading, empty, and API error states
+- Delete confirmation and save feedback states
